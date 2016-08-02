@@ -13,7 +13,7 @@ import android.widget.Toast;
 import java.io.File;
 
 /**
- * Created by Hari Prasad on 8/2/16.
+ * Created by Hari on 8/2/16.
  */
 public class BaseActivity extends AppCompatActivity {
     private static final String TAG = "BaseActivity";
@@ -60,7 +60,8 @@ public class BaseActivity extends AppCompatActivity {
         return isCreated;
     }
 
-    public void deleteDirectory(String dirName) {
+    public boolean deleteDirectory(String dirName) {
+        boolean isDeleted = false;
         int writeStorePermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (writeStorePermission != PackageManager.PERMISSION_GRANTED) {
             //Requesting for permission
@@ -72,8 +73,9 @@ public class BaseActivity extends AppCompatActivity {
             //create file object with directory name
             File file = new File(Environment.getExternalStorageDirectory() + "/" + dirName + "/");
             if (file.exists())//check is exists
-                file.delete();//delete if exists.
+                isDeleted = file.delete();//delete if exists.
             Toast.makeText(this, getResources().getString(R.string.toast_directory_deleted), Toast.LENGTH_SHORT).show();
         }
+        return isDeleted;
     }
 }
