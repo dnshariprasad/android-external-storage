@@ -21,7 +21,6 @@
         </activity>
         <activity android:name=".activity.CreateDirectoryActivity" />
         <activity android:name=".activity.DeleteDirectoryActivity" />
-        <activity android:name=".activity.SdCardActivity"></activity>
     </application>
 
 </manifest>

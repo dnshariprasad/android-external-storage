@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sdcard.R;
-import com.sdcard.activity.SdCardActivity;
+import com.sdcard.activity.MainActivity;
 import com.sdcard.manager.FileManager;
 
 import java.io.File;
@@ -71,7 +71,7 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.BasicHolder>
             File file = files.get(getLayoutPosition());
             if (file.isDirectory()) {
                 FileManager.getInstance().pushToBackTrack(file.getAbsolutePath());
-                ((SdCardActivity) context).checkReadPermissionAndRead(FileManager.getInstance().topOfBackTrack());
+                ((MainActivity) context).checkReadPermissionAndRead(FileManager.getInstance().topOfBackTrack());
             } else {
             }
         }

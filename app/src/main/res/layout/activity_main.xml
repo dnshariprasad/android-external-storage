@@ -1,28 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
+    android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_sdcard"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_files_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/text_sd_card" />
-
-    <Button
-        android:id="@+id/btn_main_create_directory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/text_create_directory" />
-
-    <Button
-        android:id="@+id/main_delete_directory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/text_delete_directory" />
-</LinearLayout>
+        android:layout_height="match_parent" />
+</RelativeLayout>
