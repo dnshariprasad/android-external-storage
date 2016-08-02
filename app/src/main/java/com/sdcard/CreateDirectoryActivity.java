@@ -56,7 +56,7 @@ public class CreateDirectoryActivity extends AppCompatActivity implements View.O
         switch (requestCode) {
             case REQUEST_PERMISSION_WRITE_STORAGE: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    createDirectory("SD-CARD");
+                    btn_create_directory.performClick();
                 } else {
                     Toast.makeText(CreateDirectoryActivity.this, getResources().getString(R.string.toast_write_permission_required), Toast.LENGTH_SHORT).show();
                 }
