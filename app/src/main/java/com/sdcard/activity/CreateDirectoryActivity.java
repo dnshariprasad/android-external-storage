@@ -1,4 +1,4 @@
-package com.sdcard;
+package com.sdcard.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.sdcard.R;
 
 public class CreateDirectoryActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "CreateDirectoryActivity";

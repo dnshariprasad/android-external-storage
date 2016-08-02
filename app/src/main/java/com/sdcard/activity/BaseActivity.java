@@ -1,4 +1,4 @@
-package com.sdcard;
+package com.sdcard.activity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.sdcard.R;
 
 import java.io.File;
 
