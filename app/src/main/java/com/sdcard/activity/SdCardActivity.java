@@ -7,8 +7,8 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.widget.Toast;
 
 import com.sdcard.R;
@@ -85,9 +85,9 @@ public class SdCardActivity extends BaseActivity {
 
     private void buildList() {
         if (null == rv_files_list.getAdapter()) {
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            rv_files_list.setLayoutManager(linearLayoutManager);
+            StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+            // Attach the layout manager to the recycler view
+            rv_files_list.setLayoutManager(gridLayoutManager);
             filesAdapter = new FilesAdapter(this, FileManager.getInstance().getFiles());
             rv_files_list.setAdapter(filesAdapter);
         } else {

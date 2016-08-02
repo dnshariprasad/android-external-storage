@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sdcard.R;
@@ -40,6 +41,12 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.BasicHolder>
 
     @Override
     public void onBindViewHolder(FilesAdapter.BasicHolder holder, int position) {
+        File file = files.get(position);
+        if (file.isDirectory()) {
+            holder.iv_file_thumb.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_folder_open_black_24dp));
+        } else {
+            holder.iv_file_thumb.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_crop_original_black_24dp));
+        }
         holder.tv_title.setText(files.get(position).getName());
     }
 
@@ -50,17 +57,23 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.BasicHolder>
 
     public class BasicHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tv_title;
+        ImageView iv_file_thumb;
 
         public BasicHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             tv_title = (TextView) itemView.findViewById(R.id.tv_title);
+            iv_file_thumb = (ImageView) itemView.findViewById(R.id.iv_file_thumb);
         }
 
         @Override
         public void onClick(View view) {
-            FileManager.getInstance().pushToBackTrack(files.get(getLayoutPosition()).getAbsolutePath());
-            ((SdCardActivity) context).checkReadPermissionAndRead(FileManager.getInstance().topOfBackTrack());
+            File file = files.get(getLayoutPosition());
+            if (file.isDirectory()) {
+                FileManager.getInstance().pushToBackTrack(file.getAbsolutePath());
+                ((SdCardActivity) context).checkReadPermissionAndRead(FileManager.getInstance().topOfBackTrack());
+            } else {
+            }
         }
     }
 }
