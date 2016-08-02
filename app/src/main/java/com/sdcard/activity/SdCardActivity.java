@@ -44,10 +44,11 @@ public class SdCardActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
+        FileManager.getInstance().popBackTrack();
         if ("-1".equals(FileManager.getInstance().topOfBackTrack())) {
             super.onBackPressed();
+            return;
         }
-        FileManager.getInstance().popBackTrack();
         checkReadPermissionAndRead(FileManager.getInstance().topOfBackTrack());
     }
 
