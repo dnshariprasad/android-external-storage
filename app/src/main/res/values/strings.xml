@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">SdCard</string>
+    <string name="toast_write_permission_required">Write permission required to full fill your action!</string>
+    <string name="hint_directory_name">Directory Name</string>
+    <string name="text_create_directory">Create Directory</string>
+    <string name="toast_empty_directory_name">Directory name is empty!</string>
+    <string name="toast_directory_created">Directory Creared.</string>
+    <string name="text_delete_directory">Delete Directory</string>
+</resources>
