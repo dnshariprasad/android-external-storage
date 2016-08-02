@@ -63,13 +63,13 @@ public class BaseActivity extends AppCompatActivity {
     public boolean deleteDirectory(String dirName) {
         boolean isDeleted = false;
         int writeStorePermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (writeStorePermission != PackageManager.PERMISSION_GRANTED) {
+        if (writeStorePermission != PackageManager.PERMISSION_GRANTED) {//if permission not granted
             //Requesting for permission
             ActivityCompat.requestPermissions(
                     this,
                     PERMISSIONS_WRITE_STORAGE,
                     REQUEST_PERMISSION_WRITE_STORAGE);
-        } else {
+        } else {//if permission granted
             //create file object with directory name
             File file = new File(Environment.getExternalStorageDirectory() + "/" + dirName + "/");
             if (file.exists())//check is exists
