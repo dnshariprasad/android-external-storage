@@ -15,11 +15,9 @@ import android.widget.Toast;
 
 import java.io.File;
 
-public class DeleteDirectoryActivity extends AppCompatActivity implements View.OnClickListener {
+public class DeleteDirectoryActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "DeleteDirectoryActivity";
-    public static final int REQUEST_PERMISSION_WRITE_STORAGE = 2;
 
-    public static String[] PERMISSIONS_WRITE_STORAGE = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private EditText et_delete_directory_name;
     private Button btn_delete_directory;
 
@@ -73,20 +71,5 @@ public class DeleteDirectoryActivity extends AppCompatActivity implements View.O
         }
     }
 
-    private void deleteDirectory(String dirName) {
-        int writeStorePermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (writeStorePermission != PackageManager.PERMISSION_GRANTED) {
-            //Requesting for permission
-            ActivityCompat.requestPermissions(
-                    this,
-                    PERMISSIONS_WRITE_STORAGE,
-                    REQUEST_PERMISSION_WRITE_STORAGE);
-        } else {
-            //create file object with directory name
-            File file = new File(Environment.getExternalStorageDirectory() + "/" + dirName + "/");
-            if (file.exists())//check is exists
-                file.delete();//delete if exists.
-            Toast.makeText(DeleteDirectoryActivity.this, getResources().getString(R.string.toast_directory_deleted), Toast.LENGTH_SHORT).show();
-        }
-    }
+
 }

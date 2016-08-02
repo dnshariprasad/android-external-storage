@@ -1,30 +1,16 @@
 package com.sdcard;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.File;
-
-public class CreateDirectoryActivity extends AppCompatActivity implements View.OnClickListener {
+public class CreateDirectoryActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "CreateDirectoryActivity";
-
-    public static final int REQUEST_PERMISSION_READ_STORAGE = 1;
-    public static final int REQUEST_PERMISSION_WRITE_STORAGE = 2;
-
-    public static String[] PERMISSIONS_READ_STORAGE = {Manifest.permission.READ_EXTERNAL_STORAGE};
-    public static String[] PERMISSIONS_WRITE_STORAGE = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
     private EditText et_directory_name;
     private Button btn_create_directory;
 
@@ -77,26 +63,5 @@ public class CreateDirectoryActivity extends AppCompatActivity implements View.O
                 createDirectory(dirName);
                 break;
         }
-    }
-
-    private boolean createDirectory(String dirName) {
-        boolean isCreated = false;
-        int writeStorePermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (writeStorePermission != PackageManager.PERMISSION_GRANTED) {
-            //Requesting for permission
-            ActivityCompat.requestPermissions(
-                    this,
-                    PERMISSIONS_WRITE_STORAGE,
-                    REQUEST_PERMISSION_WRITE_STORAGE);
-        } else {
-            //create file(file or dir) object
-            File file = new File(Environment.getExternalStorageDirectory() + "/" + dirName + "/");
-            if (!file.exists()) {//check is already exists
-                isCreated = file.mkdir();//create is not exist
-                Toast.makeText(CreateDirectoryActivity.this, getResources().getString(R.string.toast_directory_created), Toast.LENGTH_SHORT).show();
-            } else
-                Log.d(TAG, "createDirectory: Already created.");
-        }
-        return isCreated;
     }
 }
