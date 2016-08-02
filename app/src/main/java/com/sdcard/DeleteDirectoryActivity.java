@@ -1,13 +1,92 @@
 package com.sdcard;
 
-import android.support.v7.app.AppCompatActivity;
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-public class DeleteDirectoryActivity extends AppCompatActivity {
+import java.io.File;
+
+public class DeleteDirectoryActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String TAG = "DeleteDirectoryActivity";
+    public static final int REQUEST_PERMISSION_WRITE_STORAGE = 2;
+
+    public static String[] PERMISSIONS_WRITE_STORAGE = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private EditText et_delete_directory_name;
+    private Button btn_delete_directory;
+
+    public static void start(Context context) {
+        Intent starter = new Intent(context, DeleteDirectoryActivity.class);
+        context.startActivity(starter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_directory);
+        //pull views
+        et_delete_directory_name = (EditText) findViewById(R.id.et_delete_directory_name);
+        btn_delete_directory = (Button) findViewById(R.id.btn_delete_directory);
+
+        //home back enabled
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //set listeners
+        btn_delete_directory.setOnClickListener(this);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_PERMISSION_WRITE_STORAGE: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    btn_delete_directory.performClick();
+                } else {
+                    Toast.makeText(DeleteDirectoryActivity.this, getResources().getString(R.string.toast_write_permission_required), Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_delete_directory:
+                String dirName = et_delete_directory_name.getText().toString().trim();
+                if ("".equals(dirName)) {
+                    Toast.makeText(DeleteDirectoryActivity.this, getResources().getString(R.string.toast_empty_directory_name), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                deleteDirectory(dirName);
+                break;
+        }
+    }
+
+    private void deleteDirectory(String dirName) {
+        int writeStorePermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (writeStorePermission != PackageManager.PERMISSION_GRANTED) {
+            //Requesting for permission
+            ActivityCompat.requestPermissions(
+                    this,
+                    PERMISSIONS_WRITE_STORAGE,
+                    REQUEST_PERMISSION_WRITE_STORAGE);
+        } else {
+            //create file object with directory name
+            File file = new File(Environment.getExternalStorageDirectory() + "/" + dirName + "/");
+            if (file.exists())//check is exists
+                file.delete();//delete if exists.
+            Toast.makeText(DeleteDirectoryActivity.this, getResources().getString(R.string.toast_directory_deleted), Toast.LENGTH_SHORT).show();
+        }
     }
 }

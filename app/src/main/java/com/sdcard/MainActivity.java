@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 CreateDirectoryActivity.start(this);
                 break;
             case R.id.main_delete_directory:
+                DeleteDirectoryActivity.start(this);
                 break;
         }
     }

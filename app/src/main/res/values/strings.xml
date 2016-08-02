@@ -6,4 +6,5 @@
     <string name="toast_empty_directory_name">Directory name is empty!</string>
     <string name="toast_directory_created">Directory Creared.</string>
     <string name="text_delete_directory">Delete Directory</string>
+    <string name="toast_directory_deleted">Directory deleted.</string>
 </resources>
