@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sdcard.R;
+import com.sdcard.activity.SdCardActivity;
+import com.sdcard.manager.FileManager;
 
 import java.io.File;
 import java.util.List;
@@ -46,12 +48,19 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.BasicHolder>
         return files.size();
     }
 
-    public class BasicHolder extends RecyclerView.ViewHolder {
+    public class BasicHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tv_title;
 
         public BasicHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             tv_title = (TextView) itemView.findViewById(R.id.tv_title);
+        }
+
+        @Override
+        public void onClick(View view) {
+            FileManager.getInstance().pushToBackTrack(files.get(getLayoutPosition()).getAbsolutePath());
+            ((SdCardActivity) context).checkReadPermissionAndRead(FileManager.getInstance().topOfBackTrack());
         }
     }
 }

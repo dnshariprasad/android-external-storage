@@ -13,15 +13,14 @@ import android.widget.Toast;
 
 import com.sdcard.R;
 import com.sdcard.adapter.FilesAdapter;
+import com.sdcard.manager.FileManager;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class SdCardActivity extends BaseActivity {
     private static final String TAG = "SdCardActivity";
-    private List<File> filesList;
     private RecyclerView rv_files_list;
     private FilesAdapter filesAdapter;
 
@@ -39,8 +38,17 @@ public class SdCardActivity extends BaseActivity {
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        filesList = new ArrayList<>();
-        checkReadPermissionAndRead();
+        FileManager.getInstance().pushToBackTrack(Environment.getExternalStorageDirectory().getAbsolutePath());
+        checkReadPermissionAndRead(Environment.getExternalStorageDirectory().getAbsolutePath());
+    }
+
+    @Override
+    public void onBackPressed() {
+        if ("-1".equals(FileManager.getInstance().topOfBackTrack())) {
+            super.onBackPressed();
+        }
+        FileManager.getInstance().popBackTrack();
+        checkReadPermissionAndRead(FileManager.getInstance().topOfBackTrack());
     }
 
     @Override
@@ -49,7 +57,7 @@ public class SdCardActivity extends BaseActivity {
         switch (requestCode) {
             case REQUEST_PERMISSION_READ_STORAGE: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    checkReadPermissionAndRead();
+                    checkReadPermissionAndRead(Environment.getExternalStorageDirectory().getAbsolutePath());
                 } else {
                     Toast.makeText(SdCardActivity.this, getResources().getString(R.string.toast_write_permission_required), Toast.LENGTH_SHORT).show();
                 }
@@ -58,7 +66,7 @@ public class SdCardActivity extends BaseActivity {
         }
     }
 
-    public void checkReadPermissionAndRead() {
+    public void checkReadPermissionAndRead(String path) {
         int readStorePermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
         if (readStorePermission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
@@ -66,8 +74,10 @@ public class SdCardActivity extends BaseActivity {
                     PERMISSIONS_READ_STORAGE,
                     REQUEST_PERMISSION_READ_STORAGE);
         } else {
-            File root = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
-            filesList = new ArrayList<>(Arrays.asList(root.listFiles()));
+            FileManager.getInstance().getFiles().clear();
+            File target = new File(path);
+            if (null != target.listFiles())
+                FileManager.getInstance().setFiles(new ArrayList<>(Arrays.asList(target.listFiles())));
             buildList();
         }
     }
@@ -77,10 +87,10 @@ public class SdCardActivity extends BaseActivity {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             rv_files_list.setLayoutManager(linearLayoutManager);
-            filesAdapter = new FilesAdapter(this, filesList);
+            filesAdapter = new FilesAdapter(this, FileManager.getInstance().getFiles());
             rv_files_list.setAdapter(filesAdapter);
         } else {
-            filesAdapter.notify(filesList);
+            filesAdapter.notify(FileManager.getInstance().getFiles());
         }
     }
 }
