@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SdCard</string>
+    <string name="app_name">SD Card</string>
     <string name="toast_write_permission_required">Write permission required to full fill your action!</string>
     <string name="hint_directory_name">Directory Name</string>
     <string name="text_create_directory">Create Directory</string>
