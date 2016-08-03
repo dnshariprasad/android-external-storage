@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.sdcard.R;
 import com.sdcard.activity.MainActivity;
 import com.sdcard.manager.FileManager;
+import com.sdcard.util.Util;
 
 import java.io.File;
 import java.util.List;
@@ -44,6 +46,8 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.BasicHolder>
         File file = files.get(position);
         if (file.isDirectory()) {
             holder.iv_file_thumb.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_folder_open_black_24dp));
+        } else if (Util.isImage(file.getName())) {
+            Glide.with(context).load(file).into(holder.iv_file_thumb);
         } else {
             holder.iv_file_thumb.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_crop_original_black_24dp));
         }
@@ -72,7 +76,7 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.BasicHolder>
             if (file.isDirectory()) {
                 FileManager.getInstance().pushToBackTrack(file.getAbsolutePath());
                 ((MainActivity) context).checkReadPermissionAndRead(FileManager.getInstance().topOfBackTrack());
-            } else {
+            } else if (Util.isImage(file.getName())) {
             }
         }
     }
