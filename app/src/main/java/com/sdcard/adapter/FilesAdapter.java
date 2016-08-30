@@ -47,7 +47,7 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.BasicHolder>
         if (file.isDirectory()) {
             holder.iv_file_thumb.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_folder_open_black_24dp));
         } else if (Util.isImage(file.getName())) {
-            Glide.with(context).load(file).into(holder.iv_file_thumb);
+            Glide.with(context).load(file).centerCrop().into(holder.iv_file_thumb);
         } else {
             holder.iv_file_thumb.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_crop_original_black_24dp));
         }

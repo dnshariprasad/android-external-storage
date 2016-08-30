@@ -1,29 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="220dp"
     android:orientation="vertical"
     android:background="@drawable/background_file"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
-    android:elevation="2dp">
+    android:elevation="2dp"
+    android:layout_margin="1dp">
 
     <ImageView
+        android:cropToPadding="true"
+        android:adjustViewBounds="true"
+        android:layout_width="match_parent"
         android:id="@+id/iv_file_thumb"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:layout_gravity="center_horizontal" />
 
     <TextView
+        android:singleLine="true"
+        android:background="@color/transparentBlack"
+        android:layout_alignParentBottom="true"
         android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:textColor="@color/colorPrimary"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:textColor="@color/colorWhite"
         android:textStyle="bold"
         tools:text="Sample" />
-</LinearLayout>
+</RelativeLayout>

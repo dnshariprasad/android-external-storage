@@ -82,7 +82,7 @@ public class MainActivity extends BaseActivity {
 
     private void buildList() {
         if (null == rv_files_list.getAdapter()) {
-            StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+            StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
             // Attach the layout manager to the recycler view
             rv_files_list.setLayoutManager(gridLayoutManager);
             filesAdapter = new FilesAdapter(this, FileManager.getInstance().getFiles());
